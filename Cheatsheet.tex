@@ -1,0 +1,187 @@
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\geometry{a4paper, margin=1in}
+
+% Neuer Spaltentyp für gleichmäßige Breite
+\newcolumntype{C}{>{\ttfamily}X}
+
+\begin{document}
+
+\title{Rocky Linux 9 CheatSheet}
+\author{Nick von Podewils}
+\date{06.02.2024}
+\maketitle
+
+\section*{Paketverwaltung}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  apt update & dnf update & Aktualisiert Paketinformationen. \\
+  apt upgrade & dnf upgrade & Aktualisiert installierte Pakete. \\
+  apt install paketname & dnf install paketname & Installiert ein Paket. \\
+  apt remove paketname & dnf remove paketname & Deinstalliert ein Paket. \\
+  apt search suchbegriff & dnf search suchbegriff & Sucht nach Paketen. \\
+  dpkg -i paket.deb & rpm -ivh paket.rpm & Installiert ein lokales Paket. \\
+  dpkg -r paketname & rpm -e paketname & Entfernt ein Paket. \\
+\end{tabularx}
+
+
+\section*{Dienstverwaltung}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  systemctl start dienst & systemctl start dienst & Startet einen Systemd-Dienst. \\
+  systemctl stop dienst & systemctl stop dienst & Stoppt einen laufenden Systemd-Dienst. \\
+  systemctl restart dienst & systemctl restart dienst & Startet einen Systemd-Dienst neu. \\
+  systemctl enable dienst & systemctl enable dienst & Aktiviert einen Systemd-Dienst, um beim Booten zu starten. \\
+  systemctl disable dienst & systemctl disable dienst & Deaktiviert einen Systemd-Dienst, um beim Booten nicht zu starten. \\
+\end{tabularx}
+
+
+\section*{Firewall}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  ufw allow port & firewall-cmd --zone=public --add-port=port/tcp --permanent & Erlaubt den Verkehr auf einem bestimmten Port in der Firewall. \\
+  ufw deny port & firewall-cmd --zone=public --remove-port=port/tcp --permanent & Verweigert den Verkehr auf einem bestimmten Port in der Firewall. \\
+  ufw reload & firewall-cmd --reload & Lädt die Firewall-Konfiguration neu, um Änderungen zu übernehmen. \\
+  ufw status & firewall-cmd --zone=public --list-ports & Zeigt den Status und die offenen Ports in der Firewall an. \\
+\end{tabularx}
+
+\section*{Netzwerkkonfiguration}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  /etc/network/interfaces & /etc/sysconfig/network-
+  scripts/ifcfg-eth0 & Datei zur Konfiguration von Netzwerkschnittstellen. \\
+  ifconfig & ip addr show & Zeigt Informationen zu Netzwerkschnittstellen und IP-Adressen an. \\
+  route -n & ip route show & Zeigt die Routing-Tabelle des Systems an. \\
+  systemctl restart network & systemctl restart network & Startet den Netzwerkdienst neu, um Konfigurationsänderungen zu übernehmen. \\
+\end{tabularx}
+
+\section*{Benutzerverwaltung}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  adduser benutzername & useradd benutzername & Erstellt einen neuen Benutzer. \\
+  userdel benutzername & userdel benutzername & Löscht einen Benutzer. \\
+  usermod -aG gruppe benutzer & usermod -aG gruppe benutzer & Fügt einen Benutzer zu einer Gruppe hinzu. \\
+  passwd benutzername & passwd benutzername & Ändert das Passwort für einen Benutzer. \\
+  groups benutzername & id benutzername & Zeigt die Gruppenzugehörigkeit eines Benutzers an. \\
+\end{tabularx}
+
+\section*{Log-Dateien}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  /var/log/syslog & /var/log/messages & Protokolliert allgemeine Systemmeldungen. \\
+  /var/log/auth.log & /var/log/secure & Protokolliert Authentifizierungsereignisse. \\
+  /var/log/dpkg.log & /var/log/yum.log & Protokolliert Paketverwaltungsaktivitäten. \\
+\end{tabularx}
+
+\section*{Paketquellen}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  /etc/apt/sources.list & /etc/yum.repos.d/ & Datei mit den Konfigurationen der Paketquellen für den Paketmanager. \\
+\end{tabularx}
+
+
+\section*{Systeminformationen}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  uname -a & uname -a & Kernel und Systeminformationen anzeigen. \\
+  lsb\_release -a & cat /etc/os-release & Betriebssysteminformationen anzeigen. \\
+  df -h & df -h & Festplattenauslastung anzeigen. \\
+  free -m & free -m & Freien Speicher im System anzeigen. \\
+  lscpu & lscpu & CPU-Informationen anzeigen. \\
+  hostname & hostnamectl & Hostnamen des Systems anzeigen. \\
+\end{tabularx}
+
+
+\section*{Prozessverwaltung}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  ps aux & ps aux & Aktive Prozesse anzeigen. \\
+  top & top & Laufende Prozesse und Systeminformationen anzeigen. \\
+  kill PID & kill PID & Laufenden Prozess anhand der Prozess-ID beenden. \\
+  killall Prozessname & pkill Prozessname & Alle Prozesse mit einem bestimmten Namen beenden. \\
+  htop & htop & Interaktiver Prozessmonitor mit benutzerfreundlicher Oberfläche. \\
+\end{tabularx}
+
+
+\section*{Speicherplatzverwaltung}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  du -h & du -h & Zeigt den belegten Speicherplatz in Verzeichnissen an. \\
+  find / -type f -size +100M & find / -type f -size +100M & Sucht nach Dateien größer als 100 MB im Dateisystem. \\
+\end{tabularx}
+
+\section*{Benutzer- und Gruppenverwaltung}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  who & who & Zeigt angemeldete Benutzer an. \\
+  w & w & Zeigt detaillierte Benutzerinformationen an. \\
+  last & last & Zeigt Informationen zu vorherigen Anmeldungen. \\
+  groupadd gruppenname & groupadd gruppenname & Erstellt neue Benutzergruppe. \\
+  groupdel gruppenname & groupdel gruppenname & Löscht Benutzergruppe. \\
+  usermod -g gruppe benutzer & usermod -g gruppe benutzer & Ändert Hauptgruppe eines Benutzers. \\
+  id benutzer & id benutzer & Zeigt Benutzerinformationen, inklusive Gruppenzugehörigkeit. \\
+\end{tabularx}
+
+
+\section*{Sicherheitsüberprüfungen (Installation erforderlich)}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  rpm -qa | grep rkhunter & Zeigt RKHunter-Versionen an (Installation erforderlich). \\
+  rkhunter --check & Startet die RKHunter-Überprüfung auf Rootkits. \\
+  lynis audit system & Führt Sicherheitsprüfung mit Lynis durch. \\
+\end{tabularx}
+
+
+\section*{Systemdienste}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  service dienst status & systemctl status dienst & Zeigt den Status eines Systemd-Dienstes an. \\
+  service dienst start & systemctl start dienst & Startet einen Systemd-Dienst. \\
+  service dienst stop & systemctl stop dienst & Stoppt einen laufenden Systemd-Dienst. \\
+  chkconfig --list & systemctl list-unit-files & Zeigt eine Liste aller aktivierten und deaktivierten Dienste an. \\
+\end{tabularx}
+
+\section*{Paketmanagement (Zusätzliches)}
+
+\begin{tabularx}{\textwidth}{CCC}
+  \textbf{Debian} & \textbf{Rocky Linux 9} & \textbf{Erklärung} \\
+  \hline
+  apt autoremove & dnf autoremove & Entfernt unnötige Pakete und Abhängigkeiten. \\
+  apt clean & dnf clean all & Löscht heruntergeladene Paketdateien aus dem Cache. \\
+  apt list --installed & dnf list installed & Zeigt installierte Pakete an. \\
+  dpkg -L paketname & rpm -ql paketname & Zeigt Dateien eines installierten Pakets an. \\
+\end{tabularx}
+
+
+
+
+\end{document}
